@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "expedition-auto",
+      "runtimeExecutable": "ruby",
+      "runtimeArgs": ["-run", "-e", "httpd", "/Users/manilshangle/Documents/GitHub/ExpeditionAutoWebsite", "-p", "8765"],
+      "port": 8765
+    }
+  ]
+}

@@ -16,14 +16,14 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg:       #0f0f1a;
-      --card:     #1a1a2e;
-      --border:   #2a2a45;
-      --yellow:   #ffe082;
-      --yellow2:  #ffc107;
-      --text:     #eee;
-      --muted:    #888;
-      --radius:   12px;
+      --bg:      #0f0f1a;
+      --card:    #1a1a2e;
+      --border:  #2a2a45;
+      --yellow:  #ffe082;
+      --yellow2: #ffc107;
+      --text:    #eee;
+      --muted:   #888;
+      --radius:  12px;
     }
 
     body {
@@ -75,7 +75,7 @@
       letter-spacing: -0.01em;
     }
 
-    .logo-svg { width: 36px; height: 36px; flex-shrink: 0; }
+    .logo-svg { width: 32px; height: 32px; flex-shrink: 0; }
 
     .nav-link {
       color: var(--muted);
@@ -165,7 +165,11 @@
       box-shadow: 0 0 0 3px rgba(255,224,130,0.2);
     }
 
-    /* ── PREVIEW LABEL ── */
+    /* ── PREVIEW SECTION ── */
+    .preview-section {
+      margin-top: 80px;
+    }
+
     .preview-label {
       text-align: center;
       font-size: 11px;
@@ -173,19 +177,16 @@
       letter-spacing: 0.06em;
       text-transform: uppercase;
       margin-bottom: 12px;
-      opacity: 0.6;
+      opacity: 0.5;
     }
 
-    /* ── EXTENSION PREVIEW ── */
     .preview {
       max-width: 300px;
-      margin: 64px auto 96px;
+      margin: 0 auto 96px;
       background: var(--card);
       border-radius: 14px;
       padding: 20px;
       font-size: 13px;
-      border: 1px solid transparent;
-      background-clip: padding-box;
       box-shadow:
         0 0 0 1px rgba(255,224,130,0.2),
         0 20px 60px -10px rgba(0,0,0,0.6),
@@ -229,11 +230,11 @@
 
     @keyframes blink {
       0%, 100% { opacity: 1; }
-      50% { opacity: 0.25; }
+      50%       { opacity: 0.2; }
     }
 
     .preview-bar-wrap {
-      background: #111;
+      background: rgba(255,255,255,0.05);
       border-radius: 4px;
       height: 4px;
       overflow: hidden;
@@ -260,13 +261,12 @@
       gap: 6px;
     }
 
-    .log-line::before { content: '–'; font-weight: 400; opacity: 0.7; }
+    .log-line::before { content: '–'; opacity: 0.6; }
 
     /* ── FEATURES ── */
     .features {
       max-width: 860px;
       margin: 0 auto 96px;
-      padding: 0 24px;
       display: grid;
       grid-template-columns: 1fr 1fr;
       grid-template-rows: auto auto;
@@ -283,7 +283,10 @@
       display: flex;
       flex-direction: column;
       gap: 14px;
+      transition: background .2s ease;
     }
+
+    .feature-card:hover { background: #1d1d30; }
 
     .feature-card.primary {
       grid-row: 1 / 3;
@@ -307,7 +310,7 @@
     }
 
     .feature-card.primary h3 {
-      font-size: 17px;
+      font-size: 18px;
       font-weight: 700;
       color: var(--yellow);
       letter-spacing: -0.02em;
@@ -316,18 +319,8 @@
     .feature-card p {
       font-size: 13px;
       color: var(--muted);
-      line-height: 1.6;
+      line-height: 1.65;
       margin: 0;
-    }
-
-    @media (max-width: 600px) {
-      .features {
-        grid-template-columns: 1fr;
-      }
-      .feature-card.primary {
-        grid-row: auto;
-        padding: 36px 32px;
-      }
     }
 
     /* ── HOW IT WORKS ── */
@@ -354,11 +347,7 @@
       margin-bottom: 40px;
     }
 
-    .steps {
-      display: flex;
-      flex-direction: column;
-      gap: 0;
-    }
+    .steps { display: flex; flex-direction: column; }
 
     .step {
       display: flex;
@@ -412,11 +401,10 @@
     }
 
     .cta h2 {
-      font-size: 1.3rem;
-      font-weight: 600;
+      font-size: 1.4rem;
+      font-weight: 700;
       letter-spacing: -0.025em;
       margin-bottom: 8px;
-      color: var(--text);
     }
 
     .cta p {
@@ -443,22 +431,64 @@
       gap: 8px;
       color: var(--muted);
       font-size: 12px;
-      opacity: 0.55;
+      opacity: 0.5;
     }
 
-    .footer-links {
-      display: flex;
-      gap: 20px;
-    }
+    .footer-links { display: flex; gap: 20px; }
 
     .footer-links a {
       color: var(--muted);
       text-decoration: none;
       font-size: 12px;
-      opacity: 0.55;
+      opacity: 0.5;
       transition: opacity .2s;
     }
     .footer-links a:hover { opacity: 1; }
+
+    /* ── MOBILE ── */
+    @media (max-width: 680px) {
+      nav { padding: 14px 20px; }
+
+      .hero {
+        margin-top: 64px;
+        padding: 0 20px;
+      }
+
+      .features {
+        grid-template-columns: 1fr;
+        margin: 0 16px 64px;
+      }
+
+      .feature-card.primary {
+        grid-row: auto;
+        padding: 32px 28px;
+      }
+
+      .feature-card { padding: 28px; }
+
+      .section {
+        padding: 0 20px;
+        margin-bottom: 64px;
+      }
+
+      .cta {
+        padding: 0 20px;
+        margin-bottom: 80px;
+      }
+
+      footer {
+        padding: 20px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+      }
+    }
+
+    /* Tablet: add side margin so the bento grid doesn't bleed to edges */
+    @media (max-width: 900px) and (min-width: 681px) {
+      .features { margin-left: 24px; margin-right: 24px; }
+      .section  { max-width: 100%; padding: 0 32px; }
+    }
   </style>
 </head>
 <body>
@@ -500,39 +530,39 @@
 </section>
 
 <!-- POPUP PREVIEW -->
-<p class="preview-label">What the extension popup looks like</p>
-<div class="preview">
-  <div class="preview-header">
-    <div class="preview-title">
-      <svg width="16" height="16" viewBox="0 0 36 36" fill="none"><circle cx="18" cy="18" r="18" fill="#1a1a2e"/><text x="3" y="22" font-family="Arial Black,sans-serif" font-weight="900" font-size="14" fill="#ffe082">EY</text><rect x="18" y="2" width="17" height="10" rx="3" fill="#ffe082"/><text x="19.5" y="10.5" font-family="Arial,sans-serif" font-weight="800" font-size="5.5" fill="#1a1a2e">AUTO</text></svg>
-      Expedition Auto
+<div class="preview-section">
+  <p class="preview-label">What the extension popup looks like</p>
+  <div class="preview">
+    <div class="preview-header">
+      <div class="preview-title">
+        <svg width="15" height="15" viewBox="0 0 36 36" fill="none"><circle cx="18" cy="18" r="18" fill="#1a1a2e"/><text x="3" y="22" font-family="Arial Black,sans-serif" font-weight="900" font-size="14" fill="#ffe082">EY</text><rect x="18" y="2" width="17" height="10" rx="3" fill="#ffe082"/><text x="19.5" y="10.5" font-family="Arial,sans-serif" font-weight="800" font-size="5.5" fill="#1a1a2e">AUTO</text></svg>
+        Expedition Auto
+      </div>
+      <span class="preview-status"><span class="status-dot"></span>Running</span>
     </div>
-    <span class="preview-status"><span class="status-dot"></span>Running</span>
-  </div>
-  <div style="font-size:11px; color:var(--muted); margin-bottom:6px;">Found 12 videos, 8 questionnaires…</div>
-  <div class="preview-bar-wrap"><div class="preview-bar"></div></div>
-  <div style="font-size:11px; color:var(--muted); margin-bottom:4px;">14/20 done…</div>
-  <div class="preview-log">
-    <div class="log-line">Leadership in business (+50pts)</div>
-    <div class="log-line">My discoveries – Roles at EY (+25pts)</div>
-    <div class="log-line">Future of AI video (+50pts)</div>
+    <div style="font-size:11px; color:var(--muted); margin-bottom:6px;">Found 12 videos, 8 questionnaires</div>
+    <div class="preview-bar-wrap"><div class="preview-bar"></div></div>
+    <div style="font-size:11px; color:var(--muted); margin-bottom:4px;">14 / 20 done</div>
+    <div class="preview-log">
+      <div class="log-line">Leadership in business (+50pts)</div>
+      <div class="log-line">My discoveries – Roles at EY (+25pts)</div>
+      <div class="log-line">Future of AI video (+50pts)</div>
+    </div>
   </div>
 </div>
 
 <!-- FEATURES -->
 <div class="features">
 
-  <!-- PRIMARY: left column, spans both rows -->
   <div class="feature-card primary">
     <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
       <circle cx="12" cy="12" r="10"/>
       <polygon points="10 8 16 12 10 16 10 8"/>
     </svg>
     <h3>Videos</h3>
-    <p>Every CAN video marked as watched. The extension calls the completion endpoint directly — no scrubbing, no waiting.</p>
+    <p>Every CAN video marked as watched. The extension calls the completion endpoint directly. No scrubbing, no waiting for playback.</p>
   </div>
 
-  <!-- TOP RIGHT -->
   <div class="feature-card">
     <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
       <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
@@ -543,13 +573,12 @@
     <p>All "My Discoveries" assessments filled and submitted with valid answers.</p>
   </div>
 
-  <!-- BOTTOM RIGHT -->
   <div class="feature-card">
     <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
       <path d="M5 3l14 9-7 1-4 7-3-17z"/>
     </svg>
     <h3>One button</h3>
-    <p>Open the popup on any Expedition EY page and press it. That's the entire workflow.</p>
+    <p>Open the popup on any Expedition EY page and press it. That is the entire workflow.</p>
   </div>
 
 </div>
@@ -580,7 +609,7 @@
       <div class="step-dot"></div>
       <div class="step-text">
         <h4>Press the button in the popup</h4>
-        <p>Watch the log. It runs through everything and stops when it's done.</p>
+        <p>Watch the log. It runs through everything and stops when done.</p>
       </div>
     </div>
 
@@ -589,7 +618,7 @@
 
 <!-- CTA -->
 <div class="cta">
-  <h2>Get your points back.</h2>
+  <h2>Get your points.</h2>
   <p>Free. No data collected. Uninstall anytime.</p>
   <a class="btn-primary" href="https://chromewebstore.google.com" target="_blank">
     Add to Chrome
