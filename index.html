@@ -9,6 +9,9 @@
   <meta property="og:description" content="One click to complete all your Expedition EY videos and assessments." />
   <meta property="og:type" content="website" />
   <link rel="icon" type="image/svg+xml" href="icon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -24,22 +27,40 @@
     }
 
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      background: var(--bg);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg);
+      background-image:
+        radial-gradient(ellipse 80% 50% at 50% -10%, rgba(255,224,130,0.07) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 30% at 50% 0%, rgba(255,224,130,0.04) 0%, transparent 60%);
       color: var(--text);
       line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
     }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: radial-gradient(circle, rgba(255,224,130,0.06) 1px, transparent 1px);
+      background-size: 28px 28px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    body > * { position: relative; z-index: 1; }
 
     /* ── NAV ── */
     nav {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 18px 40px;
-      border-bottom: 1px solid var(--border);
+      padding: 16px 40px;
+      border-bottom: 1px solid rgba(42,42,69,0.8);
       position: sticky;
       top: 0;
-      background: var(--bg);
+      background: rgba(15,15,26,0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
       z-index: 100;
     }
 
@@ -49,11 +70,11 @@
       gap: 10px;
       text-decoration: none;
       color: var(--text);
-      font-weight: 700;
-      font-size: 16px;
+      font-weight: 500;
+      font-size: 15px;
+      letter-spacing: -0.01em;
     }
 
-    /* ── EY AUTO LOGO SVG ── */
     .logo-svg { width: 36px; height: 36px; flex-shrink: 0; }
 
     .nav-link {
@@ -66,45 +87,63 @@
 
     /* ── HERO ── */
     .hero {
-      max-width: 640px;
-      margin: 80px auto 0;
+      max-width: 580px;
+      margin: 100px auto 0;
       padding: 0 24px;
       text-align: center;
     }
 
-    .hero-logo {
+    .hero-logo-wrap {
+      position: relative;
       width: 80px;
       height: 80px;
-      margin: 0 auto 24px;
+      margin: 0 auto 32px;
     }
 
-    .badge {
-      display: inline-block;
-      background: rgba(255,224,130,.12);
-      color: var(--yellow);
-      border: 1px solid rgba(255,224,130,.3);
-      border-radius: 999px;
-      padding: 4px 14px;
-      font-size: 12px;
+    .hero-logo-wrap::before {
+      content: '';
+      position: absolute;
+      inset: -20px;
+      background: radial-gradient(circle, rgba(255,224,130,0.18) 0%, transparent 70%);
+      border-radius: 50%;
+      animation: hero-glow 3s ease-in-out infinite alternate;
+      pointer-events: none;
+    }
+
+    @keyframes hero-glow {
+      from { opacity: 0.6; transform: scale(0.95); }
+      to   { opacity: 1;   transform: scale(1.05); }
+    }
+
+    .hero-logo { width: 80px; height: 80px; }
+
+    .hero-eyebrow {
+      font-size: 11px;
       font-weight: 600;
-      letter-spacing: .5px;
-      margin-bottom: 20px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--yellow);
+      opacity: 0.7;
+      margin-bottom: 18px;
     }
 
     h1 {
-      font-size: clamp(2rem, 5vw, 2.8rem);
-      font-weight: 800;
-      line-height: 1.2;
-      margin-bottom: 18px;
+      font-size: clamp(1.9rem, 4.5vw, 2.6rem);
+      font-weight: 700;
+      line-height: 1.15;
+      letter-spacing: -0.03em;
+      margin-bottom: 20px;
     }
 
     h1 span { color: var(--yellow); }
 
     .hero p {
       color: var(--muted);
-      font-size: 16px;
-      max-width: 480px;
-      margin: 0 auto 36px;
+      font-size: 15px;
+      font-weight: 400;
+      max-width: 420px;
+      margin: 0 auto 40px;
+      line-height: 1.65;
     }
 
     .btn-primary {
@@ -112,25 +151,45 @@
       align-items: center;
       gap: 8px;
       background: var(--yellow);
-      color: #1a1a2e;
-      font-weight: 700;
-      font-size: 15px;
-      padding: 13px 28px;
-      border-radius: 8px;
+      color: #111827;
+      font-weight: 600;
+      font-size: 14px;
+      padding: 11px 24px;
+      border-radius: 6px;
       text-decoration: none;
-      transition: background .2s, transform .1s;
+      letter-spacing: 0.01em;
+      transition: background 0.15s ease, box-shadow 0.15s ease;
     }
-    .btn-primary:hover { background: var(--yellow2); transform: translateY(-1px); }
+    .btn-primary:hover {
+      background: var(--yellow2);
+      box-shadow: 0 0 0 3px rgba(255,224,130,0.2);
+    }
+
+    /* ── PREVIEW LABEL ── */
+    .preview-label {
+      text-align: center;
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+      opacity: 0.6;
+    }
 
     /* ── EXTENSION PREVIEW ── */
     .preview {
-      max-width: 320px;
-      margin: 60px auto;
+      max-width: 300px;
+      margin: 64px auto 96px;
       background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
+      border-radius: 14px;
       padding: 20px;
       font-size: 13px;
+      border: 1px solid transparent;
+      background-clip: padding-box;
+      box-shadow:
+        0 0 0 1px rgba(255,224,130,0.2),
+        0 20px 60px -10px rgba(0,0,0,0.6),
+        0 0 40px -15px rgba(255,224,130,0.08);
     }
 
     .preview-header {
@@ -144,20 +203,39 @@
       display: flex;
       align-items: center;
       gap: 8px;
-      font-weight: 700;
-      font-size: 14px;
+      font-weight: 600;
+      font-size: 13px;
+      letter-spacing: -0.01em;
     }
 
     .preview-status {
+      display: flex;
+      align-items: center;
+      gap: 5px;
       color: #66bb6a;
       font-size: 12px;
-      font-weight: 600;
+      font-weight: 500;
+    }
+
+    .status-dot {
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #66bb6a;
+      animation: blink 1.4s ease-in-out infinite;
+      flex-shrink: 0;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.25; }
     }
 
     .preview-bar-wrap {
       background: #111;
       border-radius: 4px;
-      height: 6px;
+      height: 4px;
       overflow: hidden;
       margin: 10px 0 6px;
     }
@@ -182,116 +260,176 @@
       gap: 6px;
     }
 
-    .log-line::before { content: '✓'; font-weight: 700; }
+    .log-line::before { content: '–'; font-weight: 400; opacity: 0.7; }
 
     /* ── FEATURES ── */
     .features {
-      max-width: 800px;
-      margin: 0 auto 80px;
+      max-width: 860px;
+      margin: 0 auto 96px;
       padding: 0 24px;
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 20px;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: auto auto;
+      gap: 1px;
+      background: var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1px solid var(--border);
     }
 
     .feature-card {
       background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 24px;
+      padding: 36px 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .feature-card.primary {
+      grid-row: 1 / 3;
+      padding: 48px 40px;
     }
 
     .feature-icon {
-      font-size: 24px;
-      margin-bottom: 12px;
+      width: 22px;
+      height: 22px;
+      color: var(--yellow);
+      opacity: 0.8;
+      flex-shrink: 0;
     }
 
     .feature-card h3 {
-      font-size: 15px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text);
+      letter-spacing: -0.01em;
+      margin: 0;
+    }
+
+    .feature-card.primary h3 {
+      font-size: 17px;
       font-weight: 700;
-      margin-bottom: 8px;
       color: var(--yellow);
+      letter-spacing: -0.02em;
     }
 
     .feature-card p {
       font-size: 13px;
       color: var(--muted);
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    @media (max-width: 600px) {
+      .features {
+        grid-template-columns: 1fr;
+      }
+      .feature-card.primary {
+        grid-row: auto;
+        padding: 36px 32px;
+      }
     }
 
     /* ── HOW IT WORKS ── */
     .section {
-      max-width: 640px;
-      margin: 0 auto 80px;
+      max-width: 540px;
+      margin: 0 auto 96px;
       padding: 0 24px;
-      text-align: center;
+      text-align: left;
     }
 
     .section h2 {
-      font-size: 1.6rem;
-      font-weight: 800;
-      margin-bottom: 10px;
+      font-size: 1.4rem;
+      font-weight: 700;
+      letter-spacing: -0.025em;
+      margin-bottom: 6px;
     }
 
     .section h2 span { color: var(--yellow); }
 
     .section .sub {
       color: var(--muted);
-      font-size: 15px;
-      margin-bottom: 36px;
+      font-size: 14px;
+      font-weight: 400;
+      margin-bottom: 40px;
     }
 
     .steps {
       display: flex;
       flex-direction: column;
-      gap: 16px;
-      text-align: left;
+      gap: 0;
     }
 
     .step {
       display: flex;
-      align-items: flex-start;
-      gap: 16px;
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 20px;
+      gap: 20px;
+      padding: 0 0 32px 0;
+      position: relative;
     }
 
-    .step-num {
-      min-width: 32px;
-      height: 32px;
-      background: var(--yellow);
-      color: #1a1a2e;
+    .step:not(:last-child)::before {
+      content: '';
+      position: absolute;
+      left: 7px;
+      top: 16px;
+      bottom: 0;
+      width: 1px;
+      background: var(--border);
+    }
+
+    .step-dot {
+      width: 15px;
+      height: 15px;
       border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 800;
-      font-size: 14px;
+      border: 1.5px solid var(--yellow);
+      background: var(--bg);
       flex-shrink: 0;
+      margin-top: 3px;
+      position: relative;
+      z-index: 1;
     }
 
-    .step-text h4 { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
-    .step-text p  { font-size: 13px; color: var(--muted); }
+    .step-text h4 {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text);
+      letter-spacing: -0.01em;
+      margin-bottom: 4px;
+    }
+
+    .step-text p {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
 
     /* ── CTA ── */
     .cta {
-      background: var(--card);
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-      padding: 60px 24px;
+      max-width: 400px;
+      margin: 0 auto 120px;
+      padding: 0 24px;
       text-align: center;
-      margin-bottom: 60px;
     }
 
-    .cta h2 { font-size: 1.8rem; font-weight: 800; margin-bottom: 10px; }
-    .cta h2 span { color: var(--yellow); }
-    .cta p { color: var(--muted); margin-bottom: 28px; font-size: 15px; }
+    .cta h2 {
+      font-size: 1.3rem;
+      font-weight: 600;
+      letter-spacing: -0.025em;
+      margin-bottom: 8px;
+      color: var(--text);
+    }
+
+    .cta p {
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 400;
+      margin-bottom: 28px;
+    }
 
     /* ── FOOTER ── */
     footer {
-      border-top: 1px solid var(--border);
-      padding: 28px 40px;
+      border-top: 1px solid rgba(42,42,69,0.6);
+      padding: 24px 40px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -304,7 +442,8 @@
       align-items: center;
       gap: 8px;
       color: var(--muted);
-      font-size: 13px;
+      font-size: 12px;
+      opacity: 0.55;
     }
 
     .footer-links {
@@ -315,10 +454,11 @@
     .footer-links a {
       color: var(--muted);
       text-decoration: none;
-      font-size: 13px;
-      transition: color .2s;
+      font-size: 12px;
+      opacity: 0.55;
+      transition: opacity .2s;
     }
-    .footer-links a:hover { color: var(--yellow); }
+    .footer-links a:hover { opacity: 1; }
   </style>
 </head>
 <body>
@@ -327,11 +467,8 @@
 <nav>
   <a class="nav-logo" href="#">
     <svg class="logo-svg" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <!-- Dark background circle -->
       <circle cx="18" cy="18" r="18" fill="#1a1a2e"/>
-      <!-- EY text -->
       <text x="4" y="22" font-family="Arial Black, sans-serif" font-weight="900" font-size="14" fill="#ffe082">EY</text>
-      <!-- Lightning bolt "Auto" badge -->
       <rect x="18" y="2" width="17" height="10" rx="3" fill="#ffe082"/>
       <text x="19.5" y="10.5" font-family="Arial, sans-serif" font-weight="800" font-size="5.5" fill="#1a1a2e">AUTO</text>
     </svg>
@@ -342,36 +479,35 @@
 
 <!-- HERO -->
 <section class="hero">
-  <svg class="hero-logo" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="40" cy="40" r="40" fill="#1a1a2e"/>
-    <circle cx="40" cy="40" r="38" fill="none" stroke="#ffe082" stroke-width="1.5" stroke-dasharray="4 3"/>
-    <!-- EY -->
-    <text x="7" y="52" font-family="Arial Black, sans-serif" font-weight="900" font-size="32" fill="#ffe082">EY</text>
-    <!-- AUTO badge -->
-    <rect x="40" y="6" width="38" height="20" rx="6" fill="#ffe082"/>
-    <text x="42" y="21" font-family="Arial, sans-serif" font-weight="800" font-size="12" fill="#1a1a2e">AUTO</text>
-    <!-- Lightning bolt -->
-    <path d="M38 58 L34 48 L40 47 L36 38 L46 50 L40 50 Z" fill="#ffe082" opacity="0.6"/>
-  </svg>
+  <div class="hero-logo-wrap">
+    <svg class="hero-logo" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="40" cy="40" r="40" fill="#1a1a2e"/>
+      <circle cx="40" cy="40" r="38" fill="none" stroke="#ffe082" stroke-width="1.5" stroke-dasharray="4 3"/>
+      <text x="7" y="52" font-family="Arial Black, sans-serif" font-weight="900" font-size="32" fill="#ffe082">EY</text>
+      <rect x="40" y="6" width="38" height="20" rx="6" fill="#ffe082"/>
+      <text x="42" y="21" font-family="Arial, sans-serif" font-weight="800" font-size="12" fill="#1a1a2e">AUTO</text>
+      <path d="M38 58 L34 48 L40 47 L36 38 L46 50 L40 50 Z" fill="#ffe082" opacity="0.6"/>
+    </svg>
+  </div>
 
-  <div class="badge">⚡ Chrome Extension</div>
-  <h1>Auto-complete <span>Expedition EY</span> in one click</h1>
-  <p>Stop spending hours clicking through every video and questionnaire. Expedition Auto does it all automatically — videos and assessments — so you can focus on what actually matters.</p>
+  <p class="hero-eyebrow">Chrome Extension</p>
+  <h1>Expedition done.<br><span>In about ten seconds.</span></h1>
+  <p>Marks every video watched, submits every questionnaire. One button. Works on your existing session.</p>
 
   <a class="btn-primary" href="https://chromewebstore.google.com" target="_blank">
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg>
-    Add to Chrome — It's Free
+    Add to Chrome
   </a>
 </section>
 
 <!-- POPUP PREVIEW -->
+<p class="preview-label">What the extension popup looks like</p>
 <div class="preview">
   <div class="preview-header">
     <div class="preview-title">
       <svg width="16" height="16" viewBox="0 0 36 36" fill="none"><circle cx="18" cy="18" r="18" fill="#1a1a2e"/><text x="3" y="22" font-family="Arial Black,sans-serif" font-weight="900" font-size="14" fill="#ffe082">EY</text><rect x="18" y="2" width="17" height="10" rx="3" fill="#ffe082"/><text x="19.5" y="10.5" font-family="Arial,sans-serif" font-weight="800" font-size="5.5" fill="#1a1a2e">AUTO</text></svg>
       Expedition Auto
     </div>
-    <span class="preview-status">Running…</span>
+    <span class="preview-status"><span class="status-dot"></span>Running</span>
   </div>
   <div style="font-size:11px; color:var(--muted); margin-bottom:6px;">Found 12 videos, 8 questionnaires…</div>
   <div class="preview-bar-wrap"><div class="preview-bar"></div></div>
@@ -385,66 +521,85 @@
 
 <!-- FEATURES -->
 <div class="features">
-  <div class="feature-card">
-    <div class="feature-icon">🎬</div>
-    <h3>Auto-complete Videos</h3>
-    <p>Marks every CAN video as watched without you having to sit through each one.</p>
+
+  <!-- PRIMARY: left column, spans both rows -->
+  <div class="feature-card primary">
+    <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="10"/>
+      <polygon points="10 8 16 12 10 16 10 8"/>
+    </svg>
+    <h3>Videos</h3>
+    <p>Every CAN video marked as watched. The extension calls the completion endpoint directly — no scrubbing, no waiting.</p>
   </div>
+
+  <!-- TOP RIGHT -->
   <div class="feature-card">
-    <div class="feature-icon">📝</div>
-    <h3>Submit Questionnaires</h3>
-    <p>Automatically fills out and submits all "My Discoveries" assessments with sensible answers.</p>
+    <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+      <polyline points="14 2 14 8 20 8"/>
+      <polyline points="9 15 11 17 15 13"/>
+    </svg>
+    <h3>Questionnaires</h3>
+    <p>All "My Discoveries" assessments filled and submitted with valid answers.</p>
   </div>
+
+  <!-- BOTTOM RIGHT -->
   <div class="feature-card">
-    <div class="feature-icon">⚡</div>
-    <h3>One Click, All Done</h3>
-    <p>Just open the extension popup while on Expedition EY and hit the button. That's it.</p>
+    <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M5 3l14 9-7 1-4 7-3-17z"/>
+    </svg>
+    <h3>One button</h3>
+    <p>Open the popup on any Expedition EY page and press it. That's the entire workflow.</p>
   </div>
+
 </div>
 
 <!-- HOW IT WORKS -->
 <section class="section">
   <h2>How it <span>works</span></h2>
-  <p class="sub">Three steps to complete everything in minutes.</p>
+  <p class="sub">Three steps.</p>
   <div class="steps">
+
     <div class="step">
-      <div class="step-num">1</div>
+      <div class="step-dot"></div>
       <div class="step-text">
-        <h4>Install the extension</h4>
-        <p>Add Expedition Auto to Chrome from the Web Store. No setup, no account needed.</p>
+        <h4>Install from the Chrome Web Store</h4>
+        <p>No setup, no account, no configuration.</p>
       </div>
     </div>
+
     <div class="step">
-      <div class="step-num">2</div>
+      <div class="step-dot"></div>
       <div class="step-text">
-        <h4>Navigate to Expedition EY</h4>
-        <p>Log in at us-webapp.spotme.com and open any page in the Expedition EY program.</p>
+        <h4>Open Expedition EY in Chrome</h4>
+        <p>Log in at us-webapp.spotme.com. Any page in the program works.</p>
       </div>
     </div>
+
     <div class="step">
-      <div class="step-num">3</div>
+      <div class="step-dot"></div>
       <div class="step-text">
-        <h4>Click "Complete All"</h4>
-        <p>Open the extension popup and hit the button. Watch the progress bar fill up as every video and questionnaire completes automatically.</p>
+        <h4>Press the button in the popup</h4>
+        <p>Watch the log. It runs through everything and stops when it's done.</p>
       </div>
     </div>
+
   </div>
 </section>
 
 <!-- CTA -->
 <div class="cta">
-  <h2>Ready to <span>earn your points?</span></h2>
-  <p>Free Chrome extension. Works instantly. No data collected.</p>
+  <h2>Get your points back.</h2>
+  <p>Free. No data collected. Uninstall anytime.</p>
   <a class="btn-primary" href="https://chromewebstore.google.com" target="_blank">
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg>
-    Add to Chrome — It's Free
+    Add to Chrome
   </a>
 </div>
 
 <!-- FOOTER -->
 <footer>
   <div class="footer-brand">
-    <svg width="20" height="20" viewBox="0 0 36 36" fill="none"><circle cx="18" cy="18" r="18" fill="#1a1a2e"/><text x="3" y="22" font-family="Arial Black,sans-serif" font-weight="900" font-size="14" fill="#ffe082">EY</text><rect x="18" y="2" width="17" height="10" rx="3" fill="#ffe082"/><text x="19.5" y="10.5" font-family="Arial,sans-serif" font-weight="800" font-size="5.5" fill="#1a1a2e">AUTO</text></svg>
+    <svg width="18" height="18" viewBox="0 0 36 36" fill="none"><circle cx="18" cy="18" r="18" fill="#1a1a2e"/><text x="3" y="22" font-family="Arial Black,sans-serif" font-weight="900" font-size="14" fill="#ffe082">EY</text><rect x="18" y="2" width="17" height="10" rx="3" fill="#ffe082"/><text x="19.5" y="10.5" font-family="Arial,sans-serif" font-weight="800" font-size="5.5" fill="#1a1a2e">AUTO</text></svg>
     Expedition Auto · Auto-complete for Expedition EY
   </div>
   <div class="footer-links">
