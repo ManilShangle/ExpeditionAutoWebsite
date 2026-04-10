@@ -115,12 +115,9 @@
     .btn-submit:disabled { opacity: .55; cursor: default; }
 
     /* STATES */
-    .form-msg {
-      display: none; margin-top: 16px; padding: 14px 18px;
-      border-radius: 8px; font-size: 13px; font-weight: 500;
-    }
-    .form-msg.success { background: rgba(255,224,130,.07); border: 1px solid rgba(255,224,130,.2); color: var(--yellow); display: block; }
-    .form-msg.error   { background: rgba(229,115,115,.08); border: 1px solid rgba(229,115,115,.2); color: #e07070; display: block; }
+    .form-msg { display: none; margin-top: 12px; font-size: 13px; font-weight: 400; letter-spacing: .01em; }
+    .form-msg.success { display: block; color: rgba(255,224,130,.75); }
+    .form-msg.error   { display: block; color: rgba(224,112,112,.85); }
 
     /* FOOTER */
     footer {
@@ -242,16 +239,49 @@
   });
 
   // ── Contact form (Formspree AJAX) ──
-  const form    = document.getElementById('contactForm');
-  const btn     = document.getElementById('submitBtn');
-  const msg     = document.getElementById('formMsg');
+  const form = document.getElementById('contactForm');
+  const btn  = document.getElementById('submitBtn');
+  const msg  = document.getElementById('formMsg');
+  const SVG  = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>`;
+
+  function resetBtn() {
+    btn.disabled = false;
+    btn.innerHTML = SVG + ' Send Message';
+  }
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
-    btn.disabled = true;
-    btn.textContent = 'Sending';
-    msg.className = 'form-msg';
+
+    const nameVal  = document.getElementById('name').value.trim();
+    const emailVal = document.getElementById('email').value.trim();
+    const msgVal   = document.getElementById('message').value.trim();
+
+    msg.className   = 'form-msg';
     msg.textContent = '';
+
+    if (!nameVal) {
+      msg.textContent = 'Add your name so we know who to reply to.';
+      msg.className = 'form-msg error';
+      return;
+    }
+    if (!emailVal) {
+      msg.textContent = 'Need your email so we can get back to you.';
+      msg.className = 'form-msg error';
+      return;
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailVal)) {
+      msg.textContent = "That email doesn't look right.";
+      msg.className = 'form-msg error';
+      return;
+    }
+    if (!msgVal) {
+      msg.textContent = "Don't forget to include a message.";
+      msg.className = 'form-msg error';
+      return;
+    }
+
+    btn.disabled    = true;
+    btn.textContent = 'Sending...';
 
     try {
       const res = await fetch(form.action, {
@@ -261,18 +291,21 @@
       });
 
       if (res.ok) {
-        msg.textContent = 'Message sent. We will get back to you soon.';
+        msg.textContent = "Got it! We'll be in touch.";
         msg.className = 'form-msg success';
         form.reset();
         btn.textContent = 'Sent';
       } else {
-        throw new Error('server error');
+        const data = await res.json().catch(() => ({}));
+        const isEmailErr = data.errors?.some(err => err.field === 'email');
+        msg.textContent = isEmailErr ? "That email doesn't look right." : "Couldn't send that. Give it another shot.";
+        msg.className = 'form-msg error';
+        resetBtn();
       }
     } catch {
-      msg.textContent = 'Something went wrong. Try again or reach us directly on GitHub.';
+      msg.textContent = "Couldn't send that. Try again in a moment.";
       msg.className = 'form-msg error';
-      btn.disabled = false;
-      btn.innerHTML = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> Send Message`;
+      resetBtn();
     }
   });
 </script>
