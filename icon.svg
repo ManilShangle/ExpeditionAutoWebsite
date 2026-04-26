@@ -1,7 +1,0 @@
-<svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <circle cx="18" cy="18" r="18" fill="#1a1a2e"/>
-  <circle cx="18" cy="18" r="17" fill="none" stroke="#ffe082" stroke-width="1"/>
-  <text x="2" y="23" font-family="Arial Black, sans-serif" font-weight="900" font-size="14" fill="#ffe082">EY</text>
-  <rect x="18" y="2" width="17" height="10" rx="3" fill="#ffe082"/>
-  <text x="19.5" y="10.5" font-family="Arial, sans-serif" font-weight="800" font-size="5.5" fill="#1a1a2e">AUTO</text>
-</svg>
