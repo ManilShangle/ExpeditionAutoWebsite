@@ -633,14 +633,42 @@
     const PERIOD_MS = 2000;
     const FROM = 14;
     const TO = 20;
-    function frame(now) {
+    const reduceMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    let animationFrameId = null;
+
+    function render(now) {
       const phase = (now % (PERIOD_MS * 2)) / PERIOD_MS;
       const t = phase > 1 ? 2 - phase : phase;
       const eased = 0.5 - 0.5 * Math.cos(Math.PI * t);
       el.textContent = Math.round(FROM + (TO - FROM) * eased);
-      requestAnimationFrame(frame);
     }
-    requestAnimationFrame(frame);
+
+    function stopAnimation() {
+      if (animationFrameId !== null) {
+        cancelAnimationFrame(animationFrameId);
+        animationFrameId = null;
+      }
+    }
+
+    function frame(now) {
+      render(now);
+      animationFrameId = requestAnimationFrame(frame);
+    }
+
+    function updateAnimationState() {
+      stopAnimation();
+
+      if (reduceMotionQuery.matches || document.hidden) {
+        el.textContent = FROM;
+        return;
+      }
+
+      animationFrameId = requestAnimationFrame(frame);
+    }
+
+    updateAnimationState();
+    reduceMotionQuery.addEventListener('change', updateAnimationState);
+    document.addEventListener('visibilitychange', updateAnimationState);
   })();
 </script>
 
