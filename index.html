@@ -528,7 +528,7 @@
     </div>
     <div style="font-size:11px; color:var(--muted); margin-bottom:6px;">Found 12 videos, 8 questionnaires</div>
     <div class="preview-bar-wrap"><div class="preview-bar"></div></div>
-    <div style="font-size:11px; color:var(--muted); margin-bottom:4px;">14 / 20 done</div>
+    <div style="font-size:11px; color:var(--muted); margin-bottom:4px;"><span id="preview-progress-current">14</span> / 20 done</div>
     <div class="preview-log">
       <div class="log-line">Leadership in business (+50pts)</div>
       <div class="log-line">My discoveries – Roles at EY (+25pts)</div>
@@ -622,6 +622,55 @@
     <a href="contact.html">Support</a>
   </div>
 </footer>
+
+<script>
+  // Sync the preview counter with the .preview-bar pulse animation:
+  // CSS pulse runs 2s ease-in-out alternate (72% <-> 100%).
+  // Mirror that easing on the counter (14 <-> 20).
+  (function () {
+    const el = document.getElementById('preview-progress-current');
+    if (!el) return;
+    const PERIOD_MS = 2000;
+    const FROM = 14;
+    const TO = 20;
+    const reduceMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    let animationFrameId = null;
+
+    function render(now) {
+      const phase = (now % (PERIOD_MS * 2)) / PERIOD_MS;
+      const t = phase > 1 ? 2 - phase : phase;
+      const eased = 0.5 - 0.5 * Math.cos(Math.PI * t);
+      el.textContent = Math.round(FROM + (TO - FROM) * eased);
+    }
+
+    function stopAnimation() {
+      if (animationFrameId !== null) {
+        cancelAnimationFrame(animationFrameId);
+        animationFrameId = null;
+      }
+    }
+
+    function frame(now) {
+      render(now);
+      animationFrameId = requestAnimationFrame(frame);
+    }
+
+    function updateAnimationState() {
+      stopAnimation();
+
+      if (reduceMotionQuery.matches || document.hidden) {
+        el.textContent = FROM;
+        return;
+      }
+
+      animationFrameId = requestAnimationFrame(frame);
+    }
+
+    updateAnimationState();
+    reduceMotionQuery.addEventListener('change', updateAnimationState);
+    document.addEventListener('visibilitychange', updateAnimationState);
+  })();
+</script>
 
 </body>
 </html>
